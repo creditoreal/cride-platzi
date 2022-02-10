@@ -1,5 +1,6 @@
 """Base settings to build other settings files upon."""
 
+
 import environ
 
 ROOT_DIR = environ.Path(__file__) - 3
@@ -10,14 +11,10 @@ env = environ.Env()
 # Base
 DEBUG = env.bool('DJANGO_DEBUG', False)
 
-# Language and timezone
-TIME_ZONE = 'America/Mexico_City'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
-
 # DATABASES
 DATABASES = {
     'default': env.db('DATABASE_URL'),
@@ -149,7 +146,8 @@ MANAGERS = ADMINS
 
 # Celery
 INSTALLED_APPS += ['cride.taskapp.celery.CeleryAppConfig']
-if USE_TZ:
+TIME_ZONE = 'America/Mexico_City'
+if USE_TZ := True:
     CELERY_TIMEZONE = TIME_ZONE
 CELERY_BROKER_URL = env('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
